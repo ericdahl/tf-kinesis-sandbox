@@ -41,3 +41,7 @@ resource "aws_lambda_permission" "producer" {
     principal = "events.amazonaws.com"
     source_arn = aws_cloudwatch_event_rule.producer.arn
 }
+
+resource "aws_cloudwatch_log_group" "producer" {
+  name = "/aws/lambda/producer"
+}

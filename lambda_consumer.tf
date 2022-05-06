@@ -26,3 +26,7 @@ resource "aws_lambda_event_source_mapping" "consumer" {
 
   maximum_batching_window_in_seconds = 5
 }
+
+resource "aws_cloudwatch_log_group" "consumer" {
+  name = "/aws/lambda/consumer"
+}
