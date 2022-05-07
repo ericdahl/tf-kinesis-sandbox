@@ -12,8 +12,8 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3" {
     bucket_arn = aws_s3_bucket.firehose_s3_destination.arn
 
     cloudwatch_logging_options {
-      enabled = true
-      log_group_name = "/aws/kinesisfirehose/${var.name}-extended-s3"
+      enabled         = true
+      log_group_name  = "/aws/kinesisfirehose/${var.name}-extended-s3"
       log_stream_name = "foo"
     }
 

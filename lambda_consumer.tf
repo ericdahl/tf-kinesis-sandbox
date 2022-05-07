@@ -1,4 +1,4 @@
-data archive_file "lambda_consumer" {
+data "archive_file" "lambda_consumer" {
   source_file = "${path.module}/lambda/consumer/main.py"
   output_path = "${path.module}/lambda/consumer/target/main.zip"
   type        = "zip"

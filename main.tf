@@ -3,7 +3,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Name = "tf-kinesis-sandbox"
+      Name        = "tf-kinesis-sandbox"
       Provisioner = "Terraform"
     }
   }

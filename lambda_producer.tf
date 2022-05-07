@@ -1,4 +1,4 @@
-data archive_file "lambda_producer" {
+data "archive_file" "lambda_producer" {
   source_file = "${path.module}/lambda/producer/main.py"
   output_path = "${path.module}/lambda/producer/target/main.zip"
   type        = "zip"
@@ -6,7 +6,7 @@ data archive_file "lambda_producer" {
 
 
 resource "aws_lambda_function" "producer" {
-  for_each = toset(["1","2","3","4","5"]) # FIXME - use module? cleanup
+  for_each = toset(["1", "2", "3", "4", "5"]) # FIXME - use module? cleanup
 
   function_name = "producer-${each.value}"
   handler       = "main.handler"
@@ -16,7 +16,7 @@ resource "aws_lambda_function" "producer" {
   environment {
     variables = {
       KINESIS_STREAM_NAME = aws_kinesis_stream.stream.name
-      LAMBDA_ID = each.value
+      LAMBDA_ID           = each.value
     }
   }
 
@@ -25,19 +25,19 @@ resource "aws_lambda_function" "producer" {
 }
 
 resource "aws_cloudwatch_event_rule" "producer" {
-    for_each = aws_lambda_function.producer
+  for_each = aws_lambda_function.producer
 
-    name = each.value.id
-    schedule_expression = "rate(1 minute)"
+  name                = each.value.id
+  schedule_expression = "rate(1 minute)"
 }
 
 resource "aws_cloudwatch_event_target" "producer" {
   for_each = aws_lambda_function.producer
 
 
-  rule = each.value.id
-    target_id = each.value.id
-    arn = each.value.arn
+  rule      = each.value.id
+  target_id = each.value.id
+  arn       = each.value.arn
 
 }
 
@@ -45,11 +45,11 @@ resource "aws_lambda_permission" "producer" {
   for_each = aws_lambda_function.producer
 
 
-  statement_id = "AllowExecutionFromCloudWatch"
-    action = "lambda:InvokeFunction"
-    function_name = each.value.function_name
-    principal = "events.amazonaws.com"
-    source_arn = "arn:aws:events:us-east-1:${data.aws_caller_identity.current.account_id}:rule/${each.value.function_name}"
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = each.value.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = "arn:aws:events:us-east-1:${data.aws_caller_identity.current.account_id}:rule/${each.value.function_name}"
 }
 
 resource "aws_cloudwatch_log_group" "producer" {
