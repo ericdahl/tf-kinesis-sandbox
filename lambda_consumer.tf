@@ -4,16 +4,13 @@ data "archive_file" "lambda_consumer" {
   type        = "zip"
 }
 
-
 resource "aws_lambda_function" "consumer" {
   function_name = "consumer"
   handler       = "main.handler"
   role          = aws_iam_role.lambda_consumer.arn
   runtime       = "python3.8"
-
   filename         = data.archive_file.lambda_consumer.output_path
   source_code_hash = filebase64sha256(data.archive_file.lambda_consumer.output_path)
-
 }
 
 resource "aws_lambda_event_source_mapping" "consumer" {

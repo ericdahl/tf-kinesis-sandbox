@@ -3,8 +3,6 @@ data "archive_file" "lambda_producer" {
   output_path = "${path.module}/lambda/producer/target/main.zip"
   type        = "zip"
 }
-
-
 resource "aws_lambda_function" "producer" {
   for_each = toset(["1", "2", "3", "4", "5"]) # FIXME - use module? cleanup
 
@@ -34,16 +32,13 @@ resource "aws_cloudwatch_event_rule" "producer" {
 resource "aws_cloudwatch_event_target" "producer" {
   for_each = aws_lambda_function.producer
 
-
   rule      = each.value.id
   target_id = each.value.id
   arn       = each.value.arn
-
 }
 
 resource "aws_lambda_permission" "producer" {
   for_each = aws_lambda_function.producer
-
 
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
