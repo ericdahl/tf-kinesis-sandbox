@@ -3,6 +3,7 @@ import json
 import boto3
 import os
 from datetime import datetime
+import random
 
 import logging
 logging.getLogger().setLevel(logging.INFO)
@@ -16,5 +17,5 @@ def handler(event, context):
     client.put_record(
         StreamName=os.environ['KINESIS_STREAM_NAME'],
         Data=os.environ["LAMBDA_ID"] + "/" + datetime.now().isoformat() + "\n",
-        PartitionKey='123'  # FIXME
+        PartitionKey=random.randrange(100)
     )
