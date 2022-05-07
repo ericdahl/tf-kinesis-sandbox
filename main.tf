@@ -17,3 +17,5 @@ resource "aws_kinesis_stream" "stream" {
   name        = var.name
   shard_count = 1
 }
+
+data "aws_caller_identity" "current" {}

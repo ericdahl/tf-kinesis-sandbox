@@ -1,9 +1,6 @@
 data archive_file "lambda_consumer" {
   source_file = "${path.module}/lambda/consumer/main.py"
-
   output_path = "${path.module}/lambda/consumer/target/main.zip"
-
-
   type        = "zip"
 }
 
@@ -24,7 +21,7 @@ resource "aws_lambda_event_source_mapping" "consumer" {
   function_name     = aws_lambda_function.consumer.arn
   starting_position = "LATEST"
 
-  maximum_batching_window_in_seconds = 5
+  maximum_batching_window_in_seconds = 30
 }
 
 resource "aws_cloudwatch_log_group" "consumer" {
