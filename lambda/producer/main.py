@@ -11,7 +11,7 @@ client = boto3.client('kinesis')
 
 
 def handler(event, context):
-    logging.info("Received Event [%s]", json.dumps(event, indent=2))
+    logging.debug("Received Event [%s]", json.dumps(event, indent=2))
 
     client.put_record(
         StreamName=os.environ['KINESIS_STREAM_NAME'],
