@@ -1,12 +1,15 @@
 import json
 import base64
 
-def handler(event, context):
-    print("Received event...: " + json.dumps(event, indent=2))
+import logging
+logging.getLogger().setLevel(logging.INFO)
 
-    print("num records: " + str(len(event['Records'])))
+
+def handler(event, context):
+    logging.info("Received Event [%s]", json.dumps(event, indent=2))
 
     for r in event['Records']:
         d = base64.b64decode(r['kinesis']['data'])
 
-        print(f"got record: {d}")
+        logging.info("Got Record [%s]", d)
+

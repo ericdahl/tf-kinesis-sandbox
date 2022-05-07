@@ -20,7 +20,6 @@ resource "aws_lambda_function" "producer" {
 
   filename         = data.archive_file.lambda_producer.output_path
   source_code_hash = filebase64sha256(data.archive_file.lambda_producer.output_path)
-
 }
 
 resource "aws_cloudwatch_event_rule" "producer" {
