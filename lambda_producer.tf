@@ -15,6 +15,7 @@ resource "aws_lambda_function" "producer" {
     variables = {
       KINESIS_STREAM_NAME = aws_kinesis_stream.stream.name
       LAMBDA_ID           = each.value
+      NUM_RECORDS         = 100
     }
   }
 

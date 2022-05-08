@@ -9,9 +9,7 @@ provider "aws" {
   }
 }
 
-variable "name" {
-  default = "tf-kinesis-sandbox"
-}
+data "aws_caller_identity" "current" {}
 
 resource "aws_kinesis_stream" "stream" {
   name        = var.name
@@ -24,5 +22,3 @@ resource "aws_kinesis_stream" "stream" {
     "WriteProvisionedThroughputExceeded",
   ]
 }
-
-data "aws_caller_identity" "current" {}

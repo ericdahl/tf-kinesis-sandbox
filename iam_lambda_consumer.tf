@@ -42,7 +42,8 @@ resource "aws_iam_policy" "lambda_consumer" {
                 "kinesis:*"
             ],
             "Resource": [
-                "${aws_kinesis_stream.stream.arn}"
+                "${aws_kinesis_stream.stream.arn}",
+                "${aws_kinesis_stream_consumer.lambda_consumer_fan_out.arn}"
             ]
         },
         {
