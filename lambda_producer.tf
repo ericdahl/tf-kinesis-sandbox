@@ -35,6 +35,8 @@ resource "aws_cloudwatch_event_target" "producer" {
   rule      = each.value.id
   target_id = each.value.id
   arn       = each.value.arn
+
+  depends_on = [aws_lambda_function.producer]
 }
 
 resource "aws_lambda_permission" "producer" {
