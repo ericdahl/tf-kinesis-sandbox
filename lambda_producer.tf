@@ -4,7 +4,7 @@ data "archive_file" "lambda_producer" {
   type        = "zip"
 }
 resource "aws_lambda_function" "producer" {
-  for_each = toset(["1", "2", "3", "4", "5"]) # FIXME - use module? cleanup
+  for_each = toset([for i in range(1, 6) : tostring(i)])
 
   function_name = "producer-${each.value}"
   handler       = "main.handler"
