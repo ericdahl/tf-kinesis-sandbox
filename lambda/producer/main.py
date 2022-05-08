@@ -17,5 +17,5 @@ def handler(event, context):
     client.put_record(
         StreamName=os.environ['KINESIS_STREAM_NAME'],
         Data=os.environ["LAMBDA_ID"] + "/" + datetime.now().isoformat() + "\n",
-        PartitionKey=random.randrange(100)
+        PartitionKey=str(random.randrange(100))
     )
